@@ -1,0 +1,24 @@
+<?php
+
+
+class User extends CI_Model
+{
+	public function cek_login($u, $p)
+	{
+		$this->db->from('user');
+		$this->db->where('username',$u);
+		$this->db->where('password',$p);
+		$a = $this->db->get();
+		if($a->num_rows() == 1){
+			$data = $a->result_array();
+			$this->session->set_userdata('id', $data[0]['id']);
+			$this->session->set_userdata('username', $data[0]['username']);
+			$this->session->set_userdata('nama', $data[0]['nama']);
+			$this->session->set_userdata('role', $data[0]['role']);
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+}
