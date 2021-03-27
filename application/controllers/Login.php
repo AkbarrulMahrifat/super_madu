@@ -25,12 +25,25 @@ class Login extends CI_Controller {
 		$b = $this->User->cek_login($u,$p);
 		if ($b) {
 			if ($this->session->userdata('role') == "admin") {
+				$this->notification->success("Login berhasil");
 				redirect('Beranda');
 			}
 		}
 		else {
-			$this->session->set_flashdata('error', 'username dan password salah');
+			$this->notification->error("Username atau password salah");
 			redirect('/');
 		}
+	}
+
+	public function logout()
+	{
+		$this->notification->success("Logout berhasil");
+		$this->session->unset_userdata('id');
+		$this->session->unset_userdata('username');
+		$this->session->unset_userdata('nama');
+		$this->session->unset_userdata('foto');
+		$this->session->unset_userdata('role');
+		$this->session->sess_destroy();
+		redirect('/');
 	}
 }

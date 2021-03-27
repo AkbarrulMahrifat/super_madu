@@ -14,6 +14,7 @@ class User extends CI_Model
 			$this->session->set_userdata('id', $data[0]['id']);
 			$this->session->set_userdata('username', $data[0]['username']);
 			$this->session->set_userdata('nama', $data[0]['nama']);
+			$this->session->set_userdata('foto', $data[0]['foto']);
 			$this->session->set_userdata('role', $data[0]['role']);
 			return true;
 		}

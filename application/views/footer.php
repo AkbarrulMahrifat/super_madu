@@ -50,26 +50,23 @@
 <script src="<?=base_url()?>assets/template/dist/js/pages/dashboard2.js"></script>
 
 <script>
-	// $( document ).ready(function() {
-		// $(document).Toasts('create', {
-		// 	title: 'Toast Title',
-		// 	autohide: true,
-		// 	delay: 750,
-		// 	body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-		// })
-		// toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.');
-		// toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.');
-	// });
+	//toastr function
+	toastr.options.closeButton = true;
+	<?php
+	$notif = $this->session->tempdata();
+	if (!empty($notif)) {
+		if ($notif["type"] == "success") { ?>
+		toastr.success('<?=$this->session->tempdata("message")?>', '<?=$this->session->tempdata("title")?>');
+	<?php
+		}
+		else if ($notif["type"] == "error") { ?>
+			toastr.error('<?=$this->session->tempdata("message")?>', '<?=$this->session->tempdata("title")?>');
+	<?php
+		}
+	}
+	?>
 
-	$(document).Toasts('create', {
-		class: 'bg-success',
-		title: 'Toast Title',
-		icon: 'fas fa-envelope fa-lg',
-		autohide: true,
-		delay: 2000,
-		body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-	})
-
+	//dataTable function
 	$(function () {
 		$("#dataTable").DataTable({
 			"responsive": true,

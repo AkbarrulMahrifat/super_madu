@@ -4,9 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Produk extends CI_Controller {
 	function __construct(){
 		parent::__construct();
-
 		$this->load->model('ModelProduk');
-
 	}
 
 	public function index()
@@ -41,13 +39,15 @@ class Produk extends CI_Controller {
 		$this->db->trans_begin();
 		try {
 			$this->ModelProduk->insert($data);
+			$this->db->trans_commit();
+			$this->notification->success("Data berhasil ditambah");
+			redirect("produk");
 		}
 		catch (\Exception $e) {
 			$this->db->trans_rollback();
-			throw new \Exception($e);
+			$this->notification->error($e);
+			redirect("produk");
 		}
-		$this->db->trans_commit();
-		redirect("produk");
 	}
 
 	public function update()
@@ -62,13 +62,15 @@ class Produk extends CI_Controller {
 		$this->db->trans_begin();
 		try {
 			$this->ModelProduk->update($data, $id);
+			$this->db->trans_commit();
+			$this->notification->success("Data berhasil diubah");
+			redirect("produk");
 		}
 		catch (\Exception $e) {
 			$this->db->trans_rollback();
-			throw new \Exception($e);
+			$this->notification->error($e);
+			redirect("produk");
 		}
-		$this->db->trans_commit();
-		redirect("produk");
 	}
 
 	public function delete($id)
@@ -76,12 +78,14 @@ class Produk extends CI_Controller {
 		$this->db->trans_begin();
 		try {
 			$this->ModelProduk->delete($id);
+			$this->db->trans_commit();
+			$this->notification->success("Data berhasil dihapus");
+			redirect("produk");
 		}
 		catch (\Exception $e) {
 			$this->db->trans_rollback();
-			throw new \Exception($e);
+			$this->notification->error($e);
+			redirect("produk");
 		}
-		$this->db->trans_commit();
-		redirect("produk");
 	}
 }

@@ -13,6 +13,8 @@
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/dist/css/adminlte.min.css">
+	<!-- Toastr -->
+	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/toastr/toastr.min.css">
 </head>
 <body class="hold-transition login-page" style="background-image: url(<?=base_url()?>'assets/template/dist/img/tape-aesthetic.jpg')">
 <div class="login-box">
@@ -60,6 +62,26 @@
 <script src="<?=base_url()?>assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?=base_url()?>assets/template/dist/js/adminlte.min.js"></script>
+<!-- Toastr -->
+<script src="<?=base_url()?>assets/template/plugins/toastr/toastr.min.js"></script>
+
+<script>
+	//toastr function
+	toastr.options.closeButton = true;
+	<?php
+	$notif = $this->session->tempdata();
+	if (!empty($notif)) {
+		if ($notif["type"] == "success") { ?>
+		toastr.success('<?=$this->session->tempdata("message")?>', '<?=$this->session->tempdata("title")?>');
+	<?php
+		}
+		else if ($notif["type"] == "error") { ?>
+		toastr.error('<?=$this->session->tempdata("message")?>', '<?=$this->session->tempdata("title")?>');
+	<?php
+		}
+	}
+	?>
+</script>
 
 </body>
 </html>
