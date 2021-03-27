@@ -50,7 +50,7 @@
 								<tr>
 									<td><?=$p->id?></td>
 									<td><?=$p->nama_produk?></td>
-									<td>-</td>
+									<td><img width="50" height="50" src="<?=base_url('assets/foto_produk/').$p->foto?>"></td>
 									<td><?=$p->deskripsi?></td>
 									<td><?=$p->stok?></td>
 									<td>
@@ -89,7 +89,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form id="form_produk" action="<?=site_url('produk/tambah')?>" method="post">
+				<form id="form_produk" action="<?=site_url('produk/tambah')?>" method="post" enctype="multipart/form-data">
 					<input type="hidden" id="id" name="id">
 					<div class="modal-body">
 						<div class="form-group">
@@ -99,6 +99,10 @@
 						<div class="form-group">
 							<label for="deskripsi">Deskripsi</label>
 							<textarea type="text" class="form-control" id="deskripsi" name="deskripsi" placeholder="Deskripsi produk"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="foto">Foto</label>
+							<input type="file" class="form-control" id="foto" name="foto" placeholder="Foto produk">
 						</div>
 						<div class="form-group">
 							<label for="stok">Stok</label>
@@ -125,8 +129,9 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form id="form_produk" action="<?=site_url('produk/update')?>" method="post">
+				<form id="form_produk" action="<?=site_url('produk/update')?>" method="post" enctype="multipart/form-data">
 					<input type="hidden" id="edit-id" name="id">
+					<input type="hidden" id="edit-foto-old" name="foto_old">
 					<div class="modal-body">
 						<div class="form-group">
 							<label for="edit-nama_produk">Nama Produk</label>
@@ -135,6 +140,10 @@
 						<div class="form-group">
 							<label for="edit-deskripsi">Deskripsi</label>
 							<textarea type="text" class="form-control" id="edit-deskripsi" name="deskripsi" placeholder="Deskripsi produk"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="edit-foto">Foto</label>
+							<input type="file" class="form-control" id="edit-foto" name="foto" placeholder="Foto produk">
 						</div>
 						<div class="form-group">
 							<label for="edit-stok">Stok</label>
@@ -167,6 +176,7 @@
 				$("#edit-id").val(data.id);
 				$("#edit-nama_produk").val(data.nama_produk);
 				$("#edit-deskripsi").val(data.deskripsi);
+				$("#edit-foto-old").val(data.foto);
 				$("#edit-stok").val(data.stok);
 				$("#modal-edit").modal("show");
 			},

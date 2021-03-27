@@ -30,14 +30,29 @@ class Produk extends CI_Controller {
 
 	public function tambah()
 	{
-		$data = array(
-			"nama_produk" => $this->input->post("nama_produk"),
-			"deskripsi" => $this->input->post("deskripsi"),
-			"stok" => $this->input->post("stok")
-		);
-
 		$this->db->trans_begin();
 		try {
+			$config['upload_path'] = './assets/foto_produk/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['max_size'] = 2000;
+			$this->load->library('upload', $config);
+
+			if (!$this->upload->do_upload('foto'))
+			{
+				$foto = "";
+				throw new Exception($this->upload->display_errors());
+			}
+			else
+			{
+				$foto = $this->upload->data("file_name");
+			}
+
+			$data = array(
+				"nama_produk" => $this->input->post("nama_produk"),
+				"foto" => $foto,
+				"deskripsi" => $this->input->post("deskripsi"),
+				"stok" => $this->input->post("stok")
+			);
 			$this->ModelProduk->insert($data);
 			$this->db->trans_commit();
 			$this->notification->success("Data berhasil ditambah");
@@ -45,7 +60,7 @@ class Produk extends CI_Controller {
 		}
 		catch (\Exception $e) {
 			$this->db->trans_rollback();
-			$this->notification->error($e);
+			$this->notification->error($e->getMessage());
 			redirect("produk");
 		}
 	}
@@ -53,14 +68,34 @@ class Produk extends CI_Controller {
 	public function update()
 	{
 		$id = $this->input->post("id");
-		$data = array(
-			"nama_produk" => $this->input->post("nama_produk"),
-			"deskripsi" => $this->input->post("deskripsi"),
-			"stok" => $this->input->post("stok")
-		);
 
 		$this->db->trans_begin();
 		try {
+			$config['upload_path'] = './assets/foto_produk/';
+			$config['allowed_types'] = 'gif|jpg|jpeg|png';
+			$config['max_size'] = 2000;
+			$this->load->library('upload', $config);
+			if ($_FILES['foto']['name'] != "") {
+				if (!$this->upload->do_upload('foto'))
+				{
+					throw new Exception($this->upload->display_errors());
+				}
+				else
+				{
+					$foto = $this->upload->data("file_name");
+					unlink('./assets/foto_produk/'.$this->input->post("foto_old"));
+				}
+			} else {
+				$foto = $this->input->post("foto_old");
+			}
+
+
+			$data = array(
+				"nama_produk" => $this->input->post("nama_produk"),
+				"foto" => $foto,
+				"deskripsi" => $this->input->post("deskripsi"),
+				"stok" => $this->input->post("stok")
+			);
 			$this->ModelProduk->update($data, $id);
 			$this->db->trans_commit();
 			$this->notification->success("Data berhasil diubah");
@@ -68,7 +103,7 @@ class Produk extends CI_Controller {
 		}
 		catch (\Exception $e) {
 			$this->db->trans_rollback();
-			$this->notification->error($e);
+			$this->notification->error($e->getMessage());
 			redirect("produk");
 		}
 	}
@@ -84,8 +119,27 @@ class Produk extends CI_Controller {
 		}
 		catch (\Exception $e) {
 			$this->db->trans_rollback();
-			$this->notification->error($e);
+			$this->notification->error($e->getMessage());
 			redirect("produk");
 		}
+	}
+
+	function upload($file)
+	{
+		$config['upload_path'] = './upload/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = 2000;
+		$this->load->library('upload', $config);
+
+		if (!$this->upload->do_upload('profile_pic'))
+		{
+			$data = $this->upload->display_errors();
+//			throw new Exception($data);
+		}
+		else
+		{
+			$data = array('image_metadata' => $this->upload->data());
+		}
+		return $data;
 	}
 }
