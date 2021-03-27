@@ -43,11 +43,33 @@
 <script src="<?=base_url()?>assets/template/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <!-- ChartJS -->
 <script src="<?=base_url()?>assets/template/plugins/chart.js/Chart.min.js"></script>
+<!-- Toastr -->
+<script src="<?=base_url()?>assets/template/plugins/toastr/toastr.min.js"></script>
 
 <!-- PAGE SCRIPTS -->
 <script src="<?=base_url()?>assets/template/dist/js/pages/dashboard2.js"></script>
 
 <script>
+	// $( document ).ready(function() {
+		// $(document).Toasts('create', {
+		// 	title: 'Toast Title',
+		// 	autohide: true,
+		// 	delay: 750,
+		// 	body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+		// })
+		// toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.');
+		// toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.');
+	// });
+
+	$(document).Toasts('create', {
+		class: 'bg-success',
+		title: 'Toast Title',
+		icon: 'fas fa-envelope fa-lg',
+		autohide: true,
+		delay: 2000,
+		body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+	})
+
 	$(function () {
 		$("#dataTable").DataTable({
 			"responsive": true,
