@@ -46,9 +46,9 @@
 								</tr>
 								</thead>
 								<tbody>
-								<?php foreach ($produk as $p) {?>
+								<?php $no = 1; foreach ($produk as $p) {?>
 								<tr>
-									<td><?=$p->id?></td>
+									<td><?=$no++?></td>
 									<td><?=$p->nama_produk?></td>
 									<td><img width="50" height="50" src="<?=base_url('assets/foto_produk/').$p->foto?>"></td>
 									<td><?=$p->deskripsi?></td>
