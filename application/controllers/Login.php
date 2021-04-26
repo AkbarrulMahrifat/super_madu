@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Login extends CI_Controller {
 	function __construct(){
 		parent::__construct();
-		$this->load->model('User');
+		$this->load->model('ModelUser');
 	}
 
 	public function index()
@@ -22,12 +22,10 @@ class Login extends CI_Controller {
 		$u = $this->input->post('username');
 		$p = hash('sha512', $this->input->post('password'));
 
-		$b = $this->User->cek_login($u,$p);
+		$b = $this->ModelUser->cek_login($u,$p);
 		if ($b) {
-			if ($this->session->userdata('role') == "admin") {
-				$this->notification->success("Login berhasil");
-				redirect('Beranda');
-			}
+			$this->notification->success("Login berhasil");
+			redirect('Beranda');
 		}
 		else {
 			$this->notification->error("Username atau password salah");

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Sumber Madu</title>
+	<title>Super Madu</title>
 
 	<!-- Google Font: Source Sans Pro -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -48,7 +48,7 @@
 		<!-- Brand Logo -->
 		<a href="<?=base_url()?>" class="brand-link">
 			<img src="<?=base_url()?>assets/template/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-			<span class="brand-text font-weight-light">Sumber Madu</span>
+			<span class="brand-text font-weight-light">Super Madu</span>
 		</a>
 
 		<!-- Sidebar -->
@@ -56,7 +56,7 @@
 			<!-- Sidebar user panel (optional) -->
 			<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 				<div class="image">
-					<img src="<?=base_url()?>assets/foto_user/<?=$this->session->userdata("nama")?>" class="img-circle elevation-2">
+					<img src="<?=base_url()?>assets/foto_user/<?=$this->session->userdata("foto")?>" class="img-circle elevation-2">
 				</div>
 				<div class="info">
 					<a href="#" class="d-block"><?=$this->session->userdata("nama")?></a>
@@ -74,6 +74,25 @@
 							</p>
 						</a>
 					</li>
+
+					<?php if (
+							$this->session->userdata("role") == "admin" || $this->session->userdata("role") == "pemilik"
+					) { ?>
+					<li class="nav-item">
+						<a href="<?=site_url('user')?>" class="nav-link">
+							<i class="nav-icon fas fa-user"></i>
+							<p>
+								User
+							</p>
+						</a>
+					</li>
+					<?php } ?>
+
+					<?php if (
+							$this->session->userdata("role") == "admin" ||
+							$this->session->userdata("role") == "pemilik" ||
+							$this->session->userdata("role") == "produksi"
+					) { ?>
 					<li class="nav-item">
 						<a href="<?=site_url('produk')?>" class="nav-link">
 							<i class="nav-icon fas fa-barcode"></i>
@@ -82,6 +101,13 @@
 							</p>
 						</a>
 					</li>
+					<?php } ?>
+
+					<?php if (
+					$this->session->userdata("role") == "admin" ||
+					$this->session->userdata("role") == "pemilik" ||
+					$this->session->userdata("role") == "penjualan"
+					) { ?>
 					<li class="nav-item">
 						<a href="<?=site_url('penjualan')?>" class="nav-link">
 							<i class="nav-icon fas fa-money-bill"></i>
@@ -90,6 +116,13 @@
 							</p>
 						</a>
 					</li>
+					<?php } ?>
+
+					<?php if (
+					$this->session->userdata("role") == "admin" ||
+					$this->session->userdata("role") == "pemilik" ||
+					$this->session->userdata("role") == "produksi"
+					) { ?>
 					<li class="nav-item">
 						<a href="<?=site_url('peramalan')?>" class="nav-link">
 							<i class="nav-icon fas fa-chart-bar"></i>
@@ -98,6 +131,8 @@
 							</p>
 						</a>
 					</li>
+					<?php } ?>
+
 				</ul>
 			</nav>
 			<!-- /.sidebar-menu -->

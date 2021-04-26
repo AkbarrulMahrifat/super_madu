@@ -1,7 +1,7 @@
 <?php
 
 
-class User extends CI_Model
+class ModelUser extends CI_Model
 {
 	public function cek_login($u, $p)
 	{
@@ -21,5 +21,33 @@ class User extends CI_Model
 		else{
 			return false;
 		}
+	}
+
+	public function get_all()
+	{
+		return $this->db->get("user");
+	}
+
+	public function get_detail($id)
+	{
+		$this->db->where("id", $id);
+		return $this->db->get("user");
+	}
+
+	public function insert($data)
+	{
+		return $this->db->insert('user', $data);
+	}
+
+	public function update($data, $id)
+	{
+		$this->db->where("id", $id);
+		return $this->db->update('user', $data);
+	}
+
+	public function delete($id)
+	{
+		$this->db->where("id", $id);
+		return $this->db->delete('user');
 	}
 }
