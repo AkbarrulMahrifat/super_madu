@@ -26,6 +26,7 @@ class ModelPenjualan extends CI_Model
 	{
 		$this->db->select("penjualan.*, user.nama");
 		$this->db->join("user", "penjualan.user_id = user.id");
+		$this->db->order_by("tanggal", "asc");
 		return $this->db->get("penjualan");
 	}
 

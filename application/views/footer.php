@@ -41,10 +41,19 @@
 <script src="<?=base_url()?>assets/template/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="<?=base_url()?>assets/template/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="<?=base_url()?>assets/template/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<!-- InputMask -->
+<script src="<?=base_url()?>assets/template/plugins/moment/moment.min.js"></script>
+<script src="<?=base_url()?>assets/template/plugins/inputmask/jquery.inputmask.min.js"></script>
+<!-- Select2 -->
+<script src="<?=base_url()?>assets/template/plugins/select2/js/select2.full.min.js"></script>
+<!-- date-range-picker -->
+<script src="<?=base_url()?>assets/template/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- ChartJS -->
 <script src="<?=base_url()?>assets/template/plugins/chart.js/Chart.min.js"></script>
 <!-- Toastr -->
 <script src="<?=base_url()?>assets/template/plugins/toastr/toastr.min.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="<?=base_url()?>assets/template/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 
 <!-- PAGE SCRIPTS -->
 <script src="<?=base_url()?>assets/template/dist/js/pages/dashboard2.js"></script>
@@ -72,6 +81,23 @@
 			"responsive": true,
 			"autoWidth": false,
 		});
+	});
+
+	//Initialize Select2 Elements
+	$('.select2').select2()
+
+	//Initialize Select2 Elements
+	$('.select2bs4').select2({
+		theme: 'bootstrap4'
+	})
+
+	$('.datetimepicker').datetimepicker({
+		format: "YYYY-MM-DD hh:mm",
+		useCurrent: false
+	});
+
+	$('#datepicker').datetimepicker({
+		uiLibrary: 'bootstrap4'
 	});
 </script>
 </body>

@@ -11,13 +11,20 @@
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/fontawesome-free/css/all.min.css">
 	<!-- overlayScrollbars -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-	<!-- Theme style -->
-	<link rel="stylesheet" href="<?=base_url()?>assets/template/dist/css/adminlte.min.css">
 	<!-- DataTables -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 	<!-- Toastr -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/toastr/toastr.min.css">
+	<!-- Tempusdominus Bootstrap 4 -->
+	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+	<!-- Select2 -->
+	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/select2/css/select2.min.css">
+	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+	<!-- daterange picker -->
+	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/daterangepicker/daterangepicker.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="<?=base_url()?>assets/template/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -72,6 +79,22 @@
 							<i class="nav-icon fas fa-barcode"></i>
 							<p>
 								Produk
+							</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="<?=site_url('penjualan')?>" class="nav-link">
+							<i class="nav-icon fas fa-money-bill"></i>
+							<p>
+								Penjualan
+							</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="<?=site_url('peramalan')?>" class="nav-link">
+							<i class="nav-icon fas fa-chart-bar"></i>
+							<p>
+								Peramalan
 							</p>
 						</a>
 					</li>
