@@ -116,4 +116,39 @@ class Peramalan extends CI_Controller {
 
 		return $periode;
 	}
+
+	public function simpan()
+	{
+		$this->db->trans_begin();
+		try {
+			$hasil_manual = $this->input->post("hasil_manual");
+			if ($hasil_manual == null or $hasil_manual == "null") {
+				$hasil_manual = $this->input->post("hasil");
+			}
+			$data = array(
+				"produk_id" => $this->input->post("produk_id"),
+				"periode" => $this->input->post("periode"),
+				"alpha" => $this->input->post("alpha"),
+				"hasil" => $this->input->post("hasil"),
+				"hasil_manual" => $hasil_manual,
+				"mape" => $this->input->post("mape"),
+				"tanggal" => date("Y-m-d H:i:s")
+			);
+			$cek = $this->ModelPeramalan->cek_peramalan($this->input->post("periode"), $this->input->post("produk_id"))->first_row();
+			if (!$cek) {
+				$this->ModelPeramalan->insert($data);
+			} else {
+				$id = $cek->id;
+				$this->ModelPeramalan->update($data, $id);
+			}
+			$this->db->trans_commit();
+			$this->notification->success("Data berhasil ditambah");
+			redirect("peramalan");
+		}
+		catch (\Exception $e) {
+			$this->db->trans_rollback();
+			$this->notification->error($e->getMessage());
+			redirect("peramalan");
+		}
+	}
 }

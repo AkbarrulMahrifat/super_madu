@@ -45,7 +45,7 @@
 									<div class="form-group col-sm-4">
 										<label>Tanggal Peramalan</label>
 										<div class="input-group">
-											<input type="date" class="form-control" name="tanggal_peramalan" required/>
+											<input type="text" class="form-control month1" name="tanggal_peramalan" required/>
 										</div>
 									</div>
 

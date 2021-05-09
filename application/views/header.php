@@ -23,6 +23,8 @@
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 	<!-- daterange picker -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/daterangepicker/daterangepicker.css">
+	<!--datetimepicker-->
+	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/datepicker/css/bootstrap-datepicker.css">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/dist/css/adminlte.min.css">
 </head>

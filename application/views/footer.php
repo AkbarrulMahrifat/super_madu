@@ -48,6 +48,8 @@
 <script src="<?=base_url()?>assets/template/plugins/select2/js/select2.full.min.js"></script>
 <!-- date-range-picker -->
 <script src="<?=base_url()?>assets/template/plugins/daterangepicker/daterangepicker.js"></script>
+<!--datepicker-->
+<script src="<?=base_url()?>assets/template/plugins/datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <!-- ChartJS -->
 <script src="<?=base_url()?>assets/template/plugins/chart.js/Chart.min.js"></script>
 <!-- Toastr -->
@@ -98,6 +100,30 @@
 
 	$('#datepicker').datetimepicker({
 		uiLibrary: 'bootstrap4'
+	});
+
+	$('.date1').datepicker({
+		format: "dd-mm-yyyy",
+		clearBtn: true,
+		autoclose: true
+	});
+	$('.month1').datepicker({
+		format: "yyyy-mm",
+		startView: 1,
+		minViewMode: 1,
+		maxViewMode: 2,
+		clearBtn: true,
+		autoclose: true,
+		orientation: "bottom"
+	});
+	$('.month2').datepicker({
+		format: "yyyy-mm",
+		startView: 1,
+		minViewMode: 1,
+		maxViewMode: 2,
+		clearBtn: true,
+		autoclose: true,
+		orientation: "bottom"
 	});
 </script>
 </body>

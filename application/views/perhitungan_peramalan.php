@@ -30,22 +30,94 @@
 							<h3 class="card-title">Hasil Perhitungan</h3>
 						</div>
 						<!-- /.card-header -->
-						<div class="card-body">
-							<p>
-								Hasil Perhitungan <b><?=$produk->nama_produk?></b>
-								periode <b><?=date("M Y", strtotime($periode[count($periode)-1]))?></b>
-								Menggunakan Metode <b><i>Double Exponential Smoothing</i></b>
-								adalah sebagai berikut :
-							</p>
-							<dl>
-								<dt>Alpha dengan tingkat error terkecil</dt>
-								<dd><?=$index_mape_terkecil?></dd>
-								<dt>Hasil Prediksi</dt>
-								<dd><?=round($ftm[$index_mape_terkecil][count($periode)-1], 6)?></dd>
-								<dt>MAPE</dt>
-								<dd><?=round($mape[$index_mape_terkecil], 6)?></dd>
-							</dl>
+						<div class="card-body row">
+							<div class="col-md-5">
+								<table class="table table-bordered table-hover">
+									<thead>
+									<tr>
+										<th>#</th>
+										<th>Alpha</th>
+										<th>Hasil Prediksi (Ftm)</th>
+										<th>MAPE (%)</th>
+									</tr>
+									</thead>
+									<tbody>
+									<?php
+									$no = 1;
+									foreach ($alpha as $key => $a) {
+										if ($a == $index_mape_terkecil) {
+											$style[$key] = 'style="background: #2ab62a"';
+										} else {
+											$style[$key] = "";
+										}
+										?>
+										<tr <?=$style[$key]?>>
+											<td><?=$no++?></td>
+											<td><?=$a?></td>
+											<td><?=round($ftm[$a][count($periode)-1], 6)?></td>
+											<td><?=round($mape[$a], 6)?></td>
+										</tr>
+									<?php } ?>
+									</tbody>
+								</table>
+							</div>
+							<div class="col-md-7">
+								<p>
+									Hasil prediksi penjualan <b><?=$produk->nama_produk?></b> untuk
+									periode <b><?=date("M Y", strtotime($periode[count($periode)-1]))?></b>
+									menggunakan metode <b><i>Double Exponential Smoothing</i></b>
+									adalah sebesar <b><?=round($ftm[$index_mape_terkecil][count($periode)-1], 6)?></b>.
+								</p>
+								<p>
+									Hasil prediksi dihasilkan dari alpha <b><?=$index_mape_terkecil?></b>
+									dengan tingkat error (MAPE) terkecil
+									<b><?=round($mape[$index_mape_terkecil], 6)?> %</b>.
+								</p>
+								<hr>
+								<form class="row" method="post" action="<?=site_url('peramalan/simpan')?>">
+									<div class="form-group col-sm-4">
+										<label>Hasil Perhitungan Manual</label>
+										<div class="input-group">
+											<input type="text" class="form-control" name="hasil_manual" required/>
+											<input type="hidden" value="<?=$produk->id?>" name="produk_id" required/>
+											<input type="hidden" value="<?=$periode[count($periode)-1]?>" name="periode" required/>
+											<input type="hidden" value="<?=$index_mape_terkecil?>" name="alpha" required/>
+											<input type="hidden" value="<?=round($ftm[$index_mape_terkecil][count($periode)-1], 6)?>" name="hasil" required/>
+											<input type="hidden" value="<?=round($mape[$index_mape_terkecil], 6)?>" name="mape" required/>
+										</div>
+									</div>
 
+									<div class="form-group col-sm-4">
+										<label class="text-light">--------</label>
+										<div class="input-group">
+										<button class="btn btn-primary" type="submit">Simpan</button>
+										<a class="btn btn-danger ml-2" href="<?=site_url('peramalan')?>">Kembali</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">Detail Perhitungan Tiap Alpha</h3>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
 							<div id="accordion">
 								<?php foreach ($alpha as $key => $a) { ?>
 									<div class="card card-primary">
@@ -68,7 +140,7 @@
 														<th>at</th>
 														<th>bt</th>
 														<th>Prediksi (Ftm)</th>
-														<th>PE</th>
+														<th>PE (%)</th>
 													</tr>
 													</thead>
 													<tbody>
@@ -88,7 +160,7 @@
 													<tfoot>
 														<tr>
 															<td colspan="7" style="text-align:right">MAPE</td>
-															<td><?=round($mape[$a], 6)?></td>
+															<td><?=round($mape[$a], 6)?> %</td>
 														</tr>
 													</tfoot>
 												</table>
