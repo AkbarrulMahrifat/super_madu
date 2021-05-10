@@ -12,18 +12,18 @@
 	<!-- icheck bootstrap -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 	<!-- Theme style -->
-	<link rel="stylesheet" href="<?=base_url()?>assets/template/dist/css/adminlte.min.css">
+	<link rel="stylesheet" href="<?=base_url()?>assets/template/dist/css/adminlte.css">
 	<!-- Toastr -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/toastr/toastr.min.css">
 </head>
-<body class="hold-transition login-page" style="background-image: url(<?=base_url()?>'assets/template/dist/img/tape-aesthetic.jpg')">
+<body class="hold-transition login-page">
 <div class="login-box">
-	<div class="login-logo">
-		<a href="<?=base_url()?>"><b>Super</b> Madu</a>
-	</div>
 	<!-- /.login-logo -->
 	<div class="card">
 		<div class="card-body login-card-body">
+			<div class="login-logo">
+				<a href="<?=base_url()?>"><b>Super</b> Madu</a>
+			</div>
 			<p class="login-box-msg">Sign in to start your session</p>
 
 			<form action="<?=site_url('Login/login')?>" method="post">

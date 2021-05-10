@@ -20321,7 +20321,11 @@ html.maximized-card {
 .register-page {
   -ms-flex-align: center;
   align-items: center;
-  background: #e9ecef;
+  /*background: #e9ecef;*/
+	background-image: url('../img/LogoSuperMadu.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
