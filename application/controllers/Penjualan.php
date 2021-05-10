@@ -62,6 +62,11 @@ class Penjualan extends CI_Controller {
 			$jumlah = $this->input->post("jumlah");
 			$harga = $this->input->post("harga");
 			foreach ($produk_id as $key => $i) {
+				$produk = $this->ModelProduk->get_detail($i)->first_row();
+				$data_produk = array(
+					"stok" => $produk->stok - $jumlah[$key]
+				);
+				$this->ModelProduk->update($data_produk, $i);
 				$item[] = array(
 					"penjualan_id" => $id,
 					"produk_id" => $i,
@@ -85,7 +90,7 @@ class Penjualan extends CI_Controller {
 	{
 		$this->db->trans_begin();
 		try {
-			$this->ModelProduk->delete($id);
+			$this->ModelPenjualan->delete($id);
 			$this->db->trans_commit();
 			$this->notification->success("Data berhasil dihapus");
 			redirect("penjualan");

@@ -18,10 +18,6 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-<!-- jQuery -->
-<script src="<?=base_url()?>assets/template/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="<?=base_url()?>assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="<?=base_url()?>assets/template/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
@@ -42,7 +38,6 @@
 <script src="<?=base_url()?>assets/template/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="<?=base_url()?>assets/template/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <!-- InputMask -->
-<script src="<?=base_url()?>assets/template/plugins/moment/moment.min.js"></script>
 <script src="<?=base_url()?>assets/template/plugins/inputmask/jquery.inputmask.min.js"></script>
 <!-- Select2 -->
 <script src="<?=base_url()?>assets/template/plugins/select2/js/select2.full.min.js"></script>
@@ -54,8 +49,6 @@
 <script src="<?=base_url()?>assets/template/plugins/chart.js/Chart.min.js"></script>
 <!-- Toastr -->
 <script src="<?=base_url()?>assets/template/plugins/toastr/toastr.min.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="<?=base_url()?>assets/template/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 
 <!-- PAGE SCRIPTS -->
 <script src="<?=base_url()?>assets/template/dist/js/pages/dashboard2.js"></script>
@@ -93,20 +86,29 @@
 		theme: 'bootstrap4'
 	})
 
-	$('.datetimepicker').datetimepicker({
-		format: "YYYY-MM-DD hh:mm",
-		useCurrent: false
-	});
-
-	$('#datepicker').datetimepicker({
-		uiLibrary: 'bootstrap4'
+	$(function () {
+		$('.datetimepicker').datetimepicker({
+			format: "yyyy-mm-dd hh:mm",
+			useCurrent: false,
+			autoclose: true,
+			todayBtn: true,
+			clearBtn: true,
+			use24hours: true,
+			container: '#date',
+			pickerPosition: "bottom"
+		});
 	});
 
 	$('.date1').datepicker({
-		format: "dd-mm-yyyy",
+		format: "yyyy-mm-dd",
+		startView: 1,
+		minViewMode: 1,
+		maxViewMode: 2,
 		clearBtn: true,
-		autoclose: true
+		autoclose: true,
+		orientation: "bottom"
 	});
+
 	$('.month1').datepicker({
 		format: "yyyy-mm",
 		startView: 1,
@@ -116,6 +118,7 @@
 		autoclose: true,
 		orientation: "bottom"
 	});
+
 	$('.month2').datepicker({
 		format: "yyyy-mm",
 		startView: 1,

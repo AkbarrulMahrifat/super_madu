@@ -5,6 +5,24 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Super Madu</title>
 
+	<!-- jQuery -->
+	<script src="<?=base_url()?>assets/template/plugins/jquery/jquery.min.js"></script>
+	<script src="<?=base_url()?>assets/template/plugins/moment/moment.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="<?=base_url()?>assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Tempusdominus Bootstrap 4 -->
+	<script src="<?=base_url()?>assets/template/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="<?=base_url()?>assets/template/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<!--datetimepicker-->
+	<script src="<?=base_url()?>assets/template/plugins/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+
+	<!-- Tempusdominus Bootstrap 4 -->
+	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+	<!--datetimepicker-->
+	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/datetimepicker/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/datetimepicker/less/datetimepicker.less">
+
 	<!-- Google Font: Source Sans Pro -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 	<!-- Font Awesome Icons -->
@@ -16,14 +34,12 @@
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 	<!-- Toastr -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/toastr/toastr.min.css">
-	<!-- Tempusdominus Bootstrap 4 -->
-	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 	<!-- Select2 -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/select2/css/select2.min.css">
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 	<!-- daterange picker -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/daterangepicker/daterangepicker.css">
-	<!--datetimepicker-->
+	<!--datepicker-->
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/datepicker/css/bootstrap-datepicker.css">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/template/dist/css/adminlte.min.css">

@@ -41,13 +41,13 @@
 							<div class="col-sm-4 invoice-col">
 								Nomor Pesanan :
 								<br>
-								<strong>#<?=$nomor?></strong>
+								<input class="form-control" type="text" id="nomor_pesanan" name="nomor_pesanan" value="<?=$nomor?>" readonly>
 							</div>
 							<!-- /.col -->
-							<div class="col-sm-4 invoice-col">
+							<div class="col-sm-4 invoice-col" id="date">
 								Tanggal Pesanan :
 								<br>
-								<strong><?=date("Y-m-d H:i:s")?></strong>
+								<input data-date-container='#date' class="form-control datetimepicker" type="text" id="tanggal" name="tanggal" value="<?=date("Y-m-d H:i")?>" required>
 							</div>
 							<!-- /.col -->
 						</div>
@@ -109,8 +109,6 @@
 						</div>
 						<!-- /.row -->
 
-						<input type="hidden" id="nomor_pesanan" name="nomor_pesanan" value="<?=$nomor?>">
-						<input type="hidden" id="tanggal" name="tanggal" value="<?=date("Y-m-d H:i:s")?>">
 						<div id="form-item"></div>
 
 						<!-- this row will not appear when printing -->
@@ -160,6 +158,7 @@
 					<input type="hidden" class="form-control" id="produk_id" name="produk_id">
 					<input type="hidden" class="form-control" id="produk_name" name="produk_name">
 					<input type="hidden" class="form-control" id="harga" name="harga">
+					<input type="hidden" class="form-control" id="stok" name="stok">
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-success" onclick="set_item()">Simpan</button>
@@ -174,11 +173,20 @@
 </div>
 <!-- /.content-wrapper -->
 <?php $this->load->view('footer'); ?>
-<script>
+<script type="text/javascript">
+	$(function () {
+		$('#datetimepicker4').datetimepicker();
+	});
 	var item = [];
 	var produk = <?=json_encode($produk)?>;
 
 	function set_item() {
+		var qty = parseInt($("#qty").val());
+		var stok = parseInt($("#stok").val());
+		if (qty > stok) {
+			alert("Qty tidak boleh melebihi " + stok);
+			return false;
+		}
 		var item_tambah = {
 			'produk_id': $("#produk_id").val(),
 			'produk_name': $("#produk_name").val(),
@@ -229,7 +237,8 @@
 		$("#produk_id").val(produk[id].id);
 		$("#produk_name").val(produk[id].nama_produk);
 		$("#harga").val(produk[id].harga);
-		$("#qty").attr("max", produk[id].stok);
+		$("#stok").val(produk[id].stok);
+		$("#qty").attr("max", parseInt(produk[id].stok));
 	});
 
 	$('#bayar').on('input', function () {
