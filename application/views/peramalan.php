@@ -67,11 +67,80 @@
 			<!-- /.row -->
 		</div>
 		<!-- /.container-fluid -->
+
+		<div class="container-fluid">
+			<!-- BAR CHART -->
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Grafik Hasil Perhitungan Sistem dan Manual</h3>
+
+					<div class="card-tools">
+						<button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+						</button>
+						<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="chart">
+						<canvas id="grafikPeramalan" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+					</div>
+				</div>
+				<!-- /.card-body -->
+			</div>
+			<!-- /.card -->
+		</div>
 	</section>
 	<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 <?php $this->load->view('footer'); ?>
 <script>
+	var gradfikPeramalanData = {
+		labels  : <?=json_encode($periode)?>,
+		datasets: [
+			{
+				label               : 'Perhitungan Sistem',
+				backgroundColor     : 'rgba(60,141,188,0.9)',
+				borderColor         : 'rgba(60,141,188,0.8)',
+				pointRadius          : false,
+				pointColor          : '#3b8bba',
+				pointStrokeColor    : 'rgba(60,141,188,1)',
+				pointHighlightFill  : '#fff',
+				pointHighlightStroke: 'rgba(60,141,188,1)',
+				data                : <?=json_encode($hasil)?>
+			},
+			{
+				label               : 'Perhitungan Manual',
+				backgroundColor     : 'rgba(210, 214, 222, 1)',
+				borderColor         : 'rgba(210, 214, 222, 1)',
+				pointRadius         : false,
+				pointColor          : 'rgba(210, 214, 222, 1)',
+				pointStrokeColor    : '#c1c7d1',
+				pointHighlightFill  : '#fff',
+				pointHighlightStroke: 'rgba(220,220,220,1)',
+				data                : <?=json_encode($hasil_manual)?>
+			},
+		]
+	}
+	//-------------
+	//- BAR CHART -
+	//-------------
+	var grafikPeramalanCanvas = $('#grafikPeramalan').get(0).getContext('2d')
+	var grafikPeramalanData = $.extend(true, {}, gradfikPeramalanData)
+	var temp0 = gradfikPeramalanData.datasets[0]
+	var temp1 = gradfikPeramalanData.datasets[1]
+	grafikPeramalanData.datasets[0] = temp1
+	grafikPeramalanData.datasets[1] = temp0
 
+	var grafikPeramalanOptions = {
+		responsive              : true,
+		maintainAspectRatio     : false,
+		datasetFill             : false
+	}
+
+	var grafikPeramalan = new Chart(grafikPeramalanCanvas, {
+		type: 'bar',
+		data: grafikPeramalanData,
+		options: grafikPeramalanOptions
+	})
 </script>

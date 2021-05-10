@@ -11,6 +11,19 @@ class Peramalan extends CI_Controller {
 
 	public function index()
 	{
+		$peramalan = $this->ModelPeramalan->get_all()->result();
+		$data["periode"] = array();
+		$data["hasil"] = array();
+		$data["hasil_manual"] = array();
+		foreach ($peramalan as $key => $p) {
+			$data["periode"][$key] = date("M Y", strtotime($p->periode));
+			$data["hasil"][$key] = $p->hasil;
+			$data["hasil_manual"][$key] = $p->hasil_manual;
+		}
+//		echo "<pre>";
+//		print_r($data);
+//		exit();
+
 		$data["produk"] = $this->ModelProduk->get_all()->result();
 		$this->load->view('peramalan', $data);
 	}

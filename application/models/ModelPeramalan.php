@@ -14,6 +14,7 @@ class ModelPeramalan extends CI_Model
 		$this->db->order_by('tanggal', 'ASC');
 		return $this->db->get();
 	}
+
 	public function cek_peramalan($periode, $produk_id) {
 		$this->db->select("*");
 		$this->db->from('peramalan');
@@ -21,6 +22,14 @@ class ModelPeramalan extends CI_Model
 		$this->db->where('produk_id', $produk_id);
 		return $this->db->get();
 	}
+
+	public function get_all() {
+		$this->db->select("*");
+		$this->db->from('peramalan');
+		$this->db->order_by('periode', 'ASC');
+		return $this->db->get();
+	}
+
 	public function insert($data)
 	{
 		return $this->db->insert('peramalan', $data);
