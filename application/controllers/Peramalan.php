@@ -11,7 +11,19 @@ class Peramalan extends CI_Controller {
 
 	public function index()
 	{
-		$peramalan = $this->ModelPeramalan->get_all()->result();
+		$data["produk"] = $this->ModelProduk->get_all()->result();
+		$this->load->view('peramalan', $data);
+	}
+
+	public function get_grafik()
+	{
+		if ($this->input->get("produk_id") != null) {
+			$produk_id = $this->input->get("produk_id");
+		} else {
+			$produk_id = $this->ModelProduk->get_all()->first_row()->id;
+		}
+		$peramalan = $this->ModelPeramalan->get_peramalan_per_produk($produk_id)->result();
+		$data["produk_id"] = $produk_id;
 		$data["periode"] = array();
 		$data["hasil"] = array();
 		$data["hasil_manual"] = array();
@@ -20,12 +32,7 @@ class Peramalan extends CI_Controller {
 			$data["hasil"][$key] = $p->hasil;
 			$data["hasil_manual"][$key] = $p->hasil_manual;
 		}
-//		echo "<pre>";
-//		print_r($data);
-//		exit();
-
-		$data["produk"] = $this->ModelProduk->get_all()->result();
-		$this->load->view('peramalan', $data);
+		echo json_encode($data);
 	}
 
 	public function perhitungan_metode() {

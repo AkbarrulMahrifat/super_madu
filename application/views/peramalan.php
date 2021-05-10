@@ -81,6 +81,17 @@
 					</div>
 				</div>
 				<div class="card-body">
+					<div class="form-group row col-sm-6">
+						<label for="peramalan_produk_id" class="col-sm-2 col-form-label">Produk</label>
+						<div class="col-sm-10">
+							<select class="form-control select2" style="width: 100%;" id="peramalan_produk_id" name="produk_id" onchange="grafikPeramalan()" required>
+								<?php foreach ($produk as $p) { ?>
+									<option value="<?=$p->id?>"><?=$p->nama_produk?></option>
+								<?php } ?>
+							</select>
+						</div>
+					</div>
+
 					<div class="chart">
 						<canvas id="grafikPeramalan" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
 					</div>
@@ -95,52 +106,69 @@
 <!-- /.content-wrapper -->
 <?php $this->load->view('footer'); ?>
 <script>
-	var gradfikPeramalanData = {
-		labels  : <?=json_encode($periode)?>,
-		datasets: [
-			{
-				label               : 'Perhitungan Sistem',
-				backgroundColor     : 'rgba(60,141,188,0.9)',
-				borderColor         : 'rgba(60,141,188,0.8)',
-				pointRadius          : false,
-				pointColor          : '#3b8bba',
-				pointStrokeColor    : 'rgba(60,141,188,1)',
-				pointHighlightFill  : '#fff',
-				pointHighlightStroke: 'rgba(60,141,188,1)',
-				data                : <?=json_encode($hasil)?>
-			},
-			{
-				label               : 'Perhitungan Manual',
-				backgroundColor     : 'rgba(210, 214, 222, 1)',
-				borderColor         : 'rgba(210, 214, 222, 1)',
-				pointRadius         : false,
-				pointColor          : 'rgba(210, 214, 222, 1)',
-				pointStrokeColor    : '#c1c7d1',
-				pointHighlightFill  : '#fff',
-				pointHighlightStroke: 'rgba(220,220,220,1)',
-				data                : <?=json_encode($hasil_manual)?>
-			},
-		]
-	}
-	//-------------
-	//- BAR CHART -
-	//-------------
-	var grafikPeramalanCanvas = $('#grafikPeramalan').get(0).getContext('2d')
-	var grafikPeramalanData = $.extend(true, {}, gradfikPeramalanData)
-	var temp0 = gradfikPeramalanData.datasets[0]
-	var temp1 = gradfikPeramalanData.datasets[1]
-	grafikPeramalanData.datasets[0] = temp1
-	grafikPeramalanData.datasets[1] = temp0
+	$( document ).ready(function() {
+		grafikPeramalan();
+	});
+	function grafikPeramalan() {
+		var produk_id = $("#peramalan_produk_id").val()
+		$.ajax({
+			url: "<?php echo base_url(); ?>peramalan/get_grafik/"+produk_id,
+			type: 'GET',
+			dataType: 'json',
+			success: function (data, textStatus, jqXHR) {
+				console.log(data);
+				var gradfikPeramalanData = {
+					labels  : data.periode,
+					datasets: [
+						{
+							label               : 'Perhitungan Sistem',
+							backgroundColor     : 'rgba(60,141,188,0.9)',
+							borderColor         : 'rgba(60,141,188,0.8)',
+							pointRadius          : false,
+							pointColor          : '#3b8bba',
+							pointStrokeColor    : 'rgba(60,141,188,1)',
+							pointHighlightFill  : '#fff',
+							pointHighlightStroke: 'rgba(60,141,188,1)',
+							data                : data.hasil
+						},
+						{
+							label               : 'Perhitungan Manual',
+							backgroundColor     : 'rgba(210, 214, 222, 1)',
+							borderColor         : 'rgba(210, 214, 222, 1)',
+							pointRadius         : false,
+							pointColor          : 'rgba(210, 214, 222, 1)',
+							pointStrokeColor    : '#c1c7d1',
+							pointHighlightFill  : '#fff',
+							pointHighlightStroke: 'rgba(220,220,220,1)',
+							data                : data.hasil_manual
+						},
+					]
+				}
+				//-------------
+				//- BAR CHART -
+				//-------------
+				var grafikPeramalanCanvas = $('#grafikPeramalan').get(0).getContext('2d')
+				var grafikPeramalanData = $.extend(true, {}, gradfikPeramalanData)
+				var temp0 = gradfikPeramalanData.datasets[0]
+				var temp1 = gradfikPeramalanData.datasets[1]
+				grafikPeramalanData.datasets[0] = temp1
+				grafikPeramalanData.datasets[1] = temp0
 
-	var grafikPeramalanOptions = {
-		responsive              : true,
-		maintainAspectRatio     : false,
-		datasetFill             : false
-	}
+				var grafikPeramalanOptions = {
+					responsive              : true,
+					maintainAspectRatio     : false,
+					datasetFill             : false
+				}
 
-	var grafikPeramalan = new Chart(grafikPeramalanCanvas, {
-		type: 'bar',
-		data: grafikPeramalanData,
-		options: grafikPeramalanOptions
-	})
+				var grafikPeramalan = new Chart(grafikPeramalanCanvas, {
+					type: 'bar',
+					data: grafikPeramalanData,
+					options: grafikPeramalanOptions
+				})
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log("NO");
+			}
+		});
+	}
 </script>
