@@ -15,11 +15,9 @@ class Peramalan extends CI_Controller {
 		$this->load->view('peramalan', $data);
 	}
 
-	public function get_grafik()
+	public function get_grafik($produk_id)
 	{
-		if ($this->input->get("produk_id") != null) {
-			$produk_id = $this->input->get("produk_id");
-		} else {
+		if ($produk_id == null) {
 			$produk_id = $this->ModelProduk->get_all()->first_row()->id;
 		}
 		$peramalan = $this->ModelPeramalan->get_peramalan_per_produk($produk_id)->result();

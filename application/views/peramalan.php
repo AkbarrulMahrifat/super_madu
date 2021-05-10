@@ -117,7 +117,7 @@
 			dataType: 'json',
 			success: function (data, textStatus, jqXHR) {
 				console.log(data);
-				var gradfikPeramalanData = {
+				var grafikPeramalanData = {
 					labels  : data.periode,
 					datasets: [
 						{
@@ -148,9 +148,9 @@
 				//- BAR CHART -
 				//-------------
 				var grafikPeramalanCanvas = $('#grafikPeramalan').get(0).getContext('2d')
-				var grafikPeramalanData = $.extend(true, {}, gradfikPeramalanData)
-				var temp0 = gradfikPeramalanData.datasets[0]
-				var temp1 = gradfikPeramalanData.datasets[1]
+				var grafikPeramalanData = $.extend(true, {}, grafikPeramalanData)
+				var temp0 = grafikPeramalanData.datasets[0]
+				var temp1 = grafikPeramalanData.datasets[1]
 				grafikPeramalanData.datasets[0] = temp1
 				grafikPeramalanData.datasets[1] = temp0
 

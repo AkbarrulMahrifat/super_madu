@@ -108,4 +108,26 @@ class Penjualan extends CI_Controller {
 
 		return sprintf("%010d", $number);
 	}
+
+	public function get_grafik()
+	{
+		$penjualan = $this->ModelPenjualan->get_peramalan_per_bulan()->result();
+
+		$data["penjualan"] = array();
+		$data["periode"] = array();
+		foreach ($penjualan as $key => $p) {
+			$data_penjualan[$p->produk_id][] = $p->jumlah;
+			$data["penjualan"][$p->produk_id] = array(
+				"produk_id" => $p->produk_id,
+				"nama_produk" => $p->nama_produk,
+				"data_penjualan" => $data_penjualan[$p->produk_id],
+			);
+			$data["periode"][$p->periode] = date("M Y", strtotime($p->periode));
+		}
+
+		$data["penjualan"] = array_values($data["penjualan"]);
+		$data["periode"] = array_values($data["periode"]);
+
+		echo json_encode($data);
+	}
 }
