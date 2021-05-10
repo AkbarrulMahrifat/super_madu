@@ -13,6 +13,13 @@ class User extends CI_Controller {
 		$this->load->view('user', $data);
 	}
 
+	public function edit_profile()
+	{
+		$data["user"] = $this->ModelUser->get_detail($this->session->userdata("id"))->first_row();
+
+		$this->load->view('edit_profile', $data);
+	}
+
 	public function get_detail($id)
 	{
 		$data = array();
@@ -99,11 +106,16 @@ class User extends CI_Controller {
 			$this->ModelUser->update($data, $id);
 			$this->db->trans_commit();
 			$this->notification->success("Data berhasil diubah");
-			redirect("user");
 		}
 		catch (\Exception $e) {
 			$this->db->trans_rollback();
 			$this->notification->error($e->getMessage());
+		}
+
+		$referer = explode("/", str_replace(base_url(),'',$_SERVER['HTTP_REFERER']));
+		if (in_array("edit_profile", $referer)) {
+			redirect("user/edit_profile");
+		} else {
 			redirect("user");
 		}
 	}
@@ -120,11 +132,16 @@ class User extends CI_Controller {
 			$this->ModelUser->update($data, $id);
 			$this->db->trans_commit();
 			$this->notification->success("Password berhasil diubah");
-			redirect("user");
 		}
 		catch (\Exception $e) {
 			$this->db->trans_rollback();
 			$this->notification->error($e->getMessage());
+		}
+
+		$referer = explode("/", str_replace(base_url(),'',$_SERVER['HTTP_REFERER']));
+		if (in_array("edit_profile", $referer)) {
+			redirect("user/edit_profile");
+		} else {
 			redirect("user");
 		}
 	}
@@ -143,24 +160,5 @@ class User extends CI_Controller {
 			$this->notification->error($e->getMessage());
 			redirect("user");
 		}
-	}
-
-	function upload($file)
-	{
-		$config['upload_path'] = './upload/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size'] = 2000;
-		$this->load->library('upload', $config);
-
-		if (!$this->upload->do_upload('profile_pic'))
-		{
-			$data = $this->upload->display_errors();
-//			throw new Exception($data);
-		}
-		else
-		{
-			$data = array('image_metadata' => $this->upload->data());
-		}
-		return $data;
 	}
 }

@@ -77,7 +77,7 @@
 					<img src="<?=base_url()?>assets/foto_user/<?=$this->session->userdata("foto")?>" class="img-circle elevation-2">
 				</div>
 				<div class="info">
-					<a href="#" class="d-block"><?=$this->session->userdata("nama")?></a>
+					<a href="<?=site_url('user/edit_profile')?>" class="d-block"><?=$this->session->userdata("nama")?></a>
 				</div>
 			</div>
 
