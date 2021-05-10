@@ -22,6 +22,8 @@ class ModelProduk extends CI_Model
 
 	public function get_all()
 	{
+		$this->db->select("produk.*, bahan_baku.nama_bahan_baku");
+		$this->db->join('bahan_baku', 'produk.bahan_baku_id=bahan_baku.id', 'left');
 		return $this->db->get("produk");
 	}
 

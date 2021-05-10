@@ -42,6 +42,7 @@
 									<th>Foto Produk</th>
 									<th>Deskripsi</th>
 									<th>Harga</th>
+									<th>Bahan Baku</th>
 									<th>Stok</th>
 									<th>Aksi</th>
 								</tr>
@@ -54,6 +55,10 @@
 									<td><img width="50" height="50" src="<?=base_url('assets/foto_produk/').$p->foto?>"></td>
 									<td><?=$p->deskripsi?></td>
 									<td><?=$p->harga?></td>
+									<td>
+										<?=$p->nama_bahan_baku?>
+										<p>Takaran resep : <?=$p->takaran_resep?> gr</p>
+									</td>
 									<td><?=$p->stok?></td>
 									<td>
 										<button class="btn btn-success btn-sm" onclick="tambah_stok(<?=$p->id?>)">
@@ -114,9 +119,22 @@
 							<input type="number" class="form-control" id="harga" name="harga" placeholder="Harga produk" min="1" required>
 						</div>
 						<div class="form-group">
-							<label for="stok">Stok</label>
-							<input type="number" class="form-control" id="stok" name="stok" placeholder="Stok produk" min="1" required>
+							<label for="bahan_baku_id">Bahan Baku</label>
+							<select class="form-control select2" style="width: 100%;" id="bahan_baku_id" name="bahan_baku_id" required>
+								<option value="">-- Pilih Bahan Baku --</option>
+								<?php foreach ($bahan_baku as $p) { ?>
+									<option value="<?=$p->id?>"><?=$p->nama_bahan_baku?></option>
+								<?php } ?>
+							</select>
 						</div>
+						<div class="form-group">
+							<label for="takaran_resep">Takaran Resep (gr)</label>
+							<input type="number" class="form-control" id="takaran_resep" name="takaran_resep" placeholder="Takaran resep bahan baku" min="1" required>
+						</div>
+<!--						<div class="form-group">-->
+<!--							<label for="stok">Stok</label>-->
+							<input type="hidden" value="0" class="form-control" id="stok" name="stok" placeholder="Stok produk" min="1" required>
+<!--						</div>-->
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-success">Simpan</button>
@@ -157,6 +175,19 @@
 						<div class="form-group">
 							<label for="edit-harga">Harga</label>
 							<input type="number" class="form-control" id="edit-harga" name="harga" placeholder="Harga produk" min="1" required>
+						</div>
+						<div class="form-group">
+							<label for="edit-bahan_baku_id">Bahan Baku</label>
+							<select class="form-control select2" style="width: 100%;" id="edit-bahan_baku_id" name="bahan_baku_id" required>
+								<option value="">-- Pilih Bahan Baku --</option>
+								<?php foreach ($bahan_baku as $p) { ?>
+									<option value="<?=$p->id?>"><?=$p->nama_bahan_baku?></option>
+								<?php } ?>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="edit-takaran_resep">Takaran Resep (gr)</label>
+							<input type="number" class="form-control" id="edit-takaran_resep" name="takaran_resep" placeholder="Takaran resep bahan baku" min="1" required>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -225,6 +256,8 @@
 				$("#edit-deskripsi").val(data.deskripsi);
 				$("#edit-foto-old").val(data.foto);
 				$("#edit-harga").val(data.harga);
+				$("#edit-bahan_baku_id").val(data.bahan_baku_id).change();
+				$("#edit-takaran_resep").val(data.takaran_resep);
 				$("#modal-edit").modal("show");
 			},
 			error: function (jqXHR, textStatus, errorThrown) {

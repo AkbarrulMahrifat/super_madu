@@ -5,11 +5,13 @@ class Produk extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('ModelProduk');
+		$this->load->model('ModelBahanBaku');
 	}
 
 	public function index()
 	{
 		$data["produk"] = $this->ModelProduk->get_all()->result();
+		$data["bahan_baku"] = $this->ModelBahanBaku->get_all()->result();
 		$this->load->view('produk', $data);
 	}
 
@@ -52,7 +54,9 @@ class Produk extends CI_Controller {
 				"foto" => $foto,
 				"deskripsi" => $this->input->post("deskripsi"),
 				"harga" => $this->input->post("harga"),
-				"stok" => $this->input->post("stok")
+				"stok" => $this->input->post("stok"),
+				"bahan_baku_id" => $this->input->post("bahan_baku_id"),
+				"takaran_resep" => $this->input->post("takaran_resep")
 			);
 			$this->ModelProduk->insert($data);
 			$this->db->trans_commit();
@@ -95,7 +99,9 @@ class Produk extends CI_Controller {
 				"nama_produk" => $this->input->post("nama_produk"),
 				"foto" => $foto,
 				"deskripsi" => $this->input->post("deskripsi"),
-				"harga" => $this->input->post("harga")
+				"harga" => $this->input->post("harga"),
+				"bahan_baku_id" => $this->input->post("bahan_baku_id"),
+				"takaran_resep" => $this->input->post("takaran_resep")
 			);
 			$this->ModelProduk->update($data, $id);
 			$this->db->trans_commit();
@@ -112,9 +118,24 @@ class Produk extends CI_Controller {
 	public function update_stok()
 	{
 		$id = $this->input->post("id");
+		$input_stok = $this->input->post("input_stok");
 
 		$this->db->trans_begin();
 		try {
+			//cek bahan baku
+			$produk = $this->ModelProduk->get_detail($id)->first_row();
+			$total_bahan_baku = $input_stok * $produk->takaran_resep;
+			$bahan_baku = $this->ModelBahanBaku->get_detail($produk->bahan_baku_id)->first_row();
+			if ($total_bahan_baku > $bahan_baku->stok) {
+				throw new Exception("Jumlah produksi melebihi stok bahan baku. Bahan baku " .
+					$bahan_baku->nama_bahan_baku . " tersisa " . $bahan_baku->stok . " gr.");
+			} else {
+				$data_bb = array(
+					"stok" => $bahan_baku->stok - $total_bahan_baku
+				);
+				$this->ModelBahanBaku->update($data_bb, $produk->bahan_baku_id);
+			}
+
 			$data = array(
 				"stok" => $this->input->post("stok")
 			);
