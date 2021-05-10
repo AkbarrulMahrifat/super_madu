@@ -92,7 +92,7 @@
 						</div>
 					</div>
 
-					<div class="chart">
+					<div class="chart" id="containerGrafikPeramalan">
 						<canvas id="grafikPeramalan" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
 					</div>
 				</div>
@@ -109,7 +109,13 @@
 	$( document ).ready(function() {
 		grafikPeramalan();
 	});
+
 	function grafikPeramalan() {
+		//reset canvas
+		var containerGrafikPeramalan = document.getElementById('containerGrafikPeramalan');
+		containerGrafikPeramalan.innerHTML = '&nbsp;';
+		$('#containerGrafikPeramalan').append('<canvas id="grafikPeramalan" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>');
+
 		var produk_id = $("#peramalan_produk_id").val()
 		$.ajax({
 			url: "<?php echo base_url(); ?>peramalan/get_grafik/"+produk_id,
@@ -155,9 +161,16 @@
 				grafikPeramalanData.datasets[1] = temp0
 
 				var grafikPeramalanOptions = {
-					responsive              : true,
-					maintainAspectRatio     : false,
-					datasetFill             : false
+					responsive			: true,
+					maintainAspectRatio	: false,
+					datasetFill			: false,
+					scales				: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true
+							}
+						}]
+					}
 				}
 
 				var grafikPeramalan = new Chart(grafikPeramalanCanvas, {

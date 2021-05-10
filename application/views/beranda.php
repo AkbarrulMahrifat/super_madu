@@ -93,9 +93,16 @@
 				grafikPenjualanData.datasets[1] = temp0
 
 				var grafikPenjualanOptions = {
-					responsive              : true,
-					maintainAspectRatio     : false,
-					datasetFill             : false
+					responsive			: true,
+					maintainAspectRatio	: false,
+					datasetFill			: false,
+					scales				: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true
+							}
+						}]
+					}
 				}
 
 				var grafikPenjualan = new Chart(grafikPenjualanCanvas, {
