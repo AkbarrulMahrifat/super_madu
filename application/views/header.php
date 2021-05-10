@@ -119,6 +119,14 @@
 							</p>
 						</a>
 					</li>
+					<li class="nav-item">
+						<a href="<?=site_url('bahanbaku')?>" class="nav-link">
+							<i class="nav-icon fas fa-cubes"></i>
+							<p>
+								Bahan Baku
+							</p>
+						</a>
+					</li>
 					<?php } ?>
 
 					<?php if (
