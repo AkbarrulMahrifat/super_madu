@@ -33,8 +33,8 @@
 <!--							<div class="row">-->
 								<form class="row" method="get" action="<?=site_url('peramalan/perhitungan_metode')?>">
 									<div class="form-group col-sm-4">
-										<label>Produk</label>
-										<select class="form-control select2" style="width: 100%;" name="produk_id" required>
+										<label for="produk_id">Produk</label>
+										<select class="form-control select2" style="width: 100%;" id="produk_id" name="produk_id" required>
 											<option value="">-- Pilih Produk --</option>
 											<?php foreach ($produk as $p) { ?>
 												<option value="<?=$p->id?>"><?=$p->nama_produk?></option>
@@ -43,9 +43,9 @@
 									</div>
 
 									<div class="form-group col-sm-4">
-										<label>Tanggal Peramalan</label>
-										<div class="input-group">
-											<input type="text" class="form-control month1" name="tanggal_peramalan" required/>
+										<label for="tanggal_peramalan">Periode Peramalan</label>
+										<div class="input-group" id="tanggal">
+											<input data-date-container='#tanggal' type="text" class="form-control month1" id="tanggal_peramalan" name="tanggal_peramalan" required/>
 										</div>
 									</div>
 

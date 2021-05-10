@@ -13,4 +13,9 @@ class Beranda extends CI_Controller
 	{
 		$this->load->view('beranda');
 	}
+
+	public function about()
+	{
+		$this->load->view('about');
+	}
 }
