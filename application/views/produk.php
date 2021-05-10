@@ -41,6 +41,7 @@
 									<th>Nama Produk</th>
 									<th>Foto Produk</th>
 									<th>Deskripsi</th>
+									<th>Harga</th>
 									<th>Stok</th>
 									<th>Aksi</th>
 								</tr>
@@ -52,8 +53,12 @@
 									<td><?=$p->nama_produk?></td>
 									<td><img width="50" height="50" src="<?=base_url('assets/foto_produk/').$p->foto?>"></td>
 									<td><?=$p->deskripsi?></td>
+									<td><?=$p->harga?></td>
 									<td><?=$p->stok?></td>
 									<td>
+										<button class="btn btn-success btn-sm" onclick="tambah_stok(<?=$p->id?>)">
+											<i class="fas fa-plus"></i>
+										</button>
 										<button class="btn btn-primary btn-sm" onclick="edit(<?=$p->id?>)">
 											<i class="fas fa-edit"></i>
 										</button>
@@ -105,6 +110,10 @@
 							<input type="file" class="form-control" id="foto" name="foto" placeholder="Foto produk">
 						</div>
 						<div class="form-group">
+							<label for="harga">Harga</label>
+							<input type="number" class="form-control" id="harga" name="harga" placeholder="Harga produk" min="1" required>
+						</div>
+						<div class="form-group">
 							<label for="stok">Stok</label>
 							<input type="number" class="form-control" id="stok" name="stok" placeholder="Stok produk" min="1" required>
 						</div>
@@ -146,8 +155,46 @@
 							<input type="file" class="form-control" id="edit-foto" name="foto" placeholder="Foto produk">
 						</div>
 						<div class="form-group">
-							<label for="edit-stok">Stok</label>
-							<input type="number" class="form-control" id="edit-stok" name="stok" placeholder="Stok produk" min="1" required>
+							<label for="edit-harga">Harga</label>
+							<input type="number" class="form-control" id="edit-harga" name="harga" placeholder="Harga produk" min="1" required>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success">Simpan</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+					</div>
+				</form>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+	<div class="modal fade" id="modal-tambahstok">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Tambah Stok</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form id="form_update_stok" action="<?=site_url('produk/update_stok')?>" method="post" enctype="multipart/form-data">
+					<input type="hidden" id="stok-id" name="id">
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="stok-nama_produk">Nama Produk</label>
+							<input type="text" class="form-control" id="stok-nama_produk" name="nama_produk" placeholder="Nama produk" readonly>
+						</div>
+						<div class="form-group">
+							<label for="stok-stok">Stok</label>
+							<input type="hidden" id="stok-stok_lama" name="stok_lama" readonly>
+							<input type="number" class="form-control" id="stok-stok" name="stok" placeholder="Stok" min="1" readonly>
+						</div>
+						<div class="form-group">
+							<label for="stok-input_stok">Input Stok Tambahan</label>
+							<input type="number" class="form-control" id="stok-input_stok" name="input_stok" placeholder="Input Stok Tambahan" min="1" required>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -177,8 +224,38 @@
 				$("#edit-nama_produk").val(data.nama_produk);
 				$("#edit-deskripsi").val(data.deskripsi);
 				$("#edit-foto-old").val(data.foto);
-				$("#edit-stok").val(data.stok);
+				$("#edit-harga").val(data.harga);
 				$("#modal-edit").modal("show");
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log("NO");
+			}
+		});
+	}
+
+	$('#stok-input_stok').on('input',function(e){
+		var stok = $("#stok-stok_lama").val();
+		var input_stok = $("#stok-input_stok").val();
+		if (isNaN(input_stok) || input_stok === "") {
+			input_stok = 0;
+		}
+
+		$("#stok-stok").val(parseInt(stok) + parseInt(input_stok));
+	});
+
+	function tambah_stok(id) {
+		$.ajax({
+			url: "<?php echo base_url(); ?>produk/get_detail/"+id,
+			// data: {"id_truck":json_truck[i].id_truck},
+			type: 'GET',
+			dataType: 'json',
+			success: function (data, textStatus, jqXHR) {
+				console.log(data);
+				$("#stok-id").val(data.id);
+				$("#stok-nama_produk").val(data.nama_produk);
+				$("#stok-stok_lama").val(data.stok);
+				$("#stok-stok").val(data.stok);
+				$("#modal-tambahstok").modal("show");
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("NO");

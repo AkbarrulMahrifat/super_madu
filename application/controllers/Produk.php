@@ -51,6 +51,7 @@ class Produk extends CI_Controller {
 				"nama_produk" => $this->input->post("nama_produk"),
 				"foto" => $foto,
 				"deskripsi" => $this->input->post("deskripsi"),
+				"harga" => $this->input->post("harga"),
 				"stok" => $this->input->post("stok")
 			);
 			$this->ModelProduk->insert($data);
@@ -94,6 +95,27 @@ class Produk extends CI_Controller {
 				"nama_produk" => $this->input->post("nama_produk"),
 				"foto" => $foto,
 				"deskripsi" => $this->input->post("deskripsi"),
+				"harga" => $this->input->post("harga")
+			);
+			$this->ModelProduk->update($data, $id);
+			$this->db->trans_commit();
+			$this->notification->success("Data berhasil diubah");
+			redirect("produk");
+		}
+		catch (\Exception $e) {
+			$this->db->trans_rollback();
+			$this->notification->error($e->getMessage());
+			redirect("produk");
+		}
+	}
+
+	public function update_stok()
+	{
+		$id = $this->input->post("id");
+
+		$this->db->trans_begin();
+		try {
+			$data = array(
 				"stok" => $this->input->post("stok")
 			);
 			$this->ModelProduk->update($data, $id);
@@ -113,6 +135,8 @@ class Produk extends CI_Controller {
 		$this->db->trans_begin();
 		try {
 			$this->ModelProduk->delete($id);
+			$data = $this->ModelProduk->get_detail($id)->first_row();
+			unlink('./assets/foto_produk/'.$data->foto);
 			$this->db->trans_commit();
 			$this->notification->success("Data berhasil dihapus");
 			redirect("produk");
