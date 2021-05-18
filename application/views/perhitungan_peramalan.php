@@ -73,6 +73,11 @@
 									dengan tingkat error (MAPE) terkecil
 									<b><?=round($mape[$index_mape_terkecil], 6)?> %</b>.
 								</p>
+								<p>
+									Rekomendasi stok <?=$produk->nama_produk?> : <b><?=$stok_tape = round($ftm[$index_mape_terkecil][count($periode)-1])?></b>.
+									<br>
+									Rekomendasi stok <?=$produk->nama_bahan_baku?> : <b><?=$stok_tape * $produk->takaran_resep?> gr</b>.
+								</p>
 								<hr>
 								<form class="row" method="post" action="<?=site_url('peramalan/simpan')?>">
 									<div class="form-group col-sm-4">

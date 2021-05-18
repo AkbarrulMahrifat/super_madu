@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2021 at 11:03 PM
+-- Generation Time: May 10, 2021 at 08:05 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `supermadu`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bahan_baku`
+--
+
+CREATE TABLE `bahan_baku` (
+  `id` int(11) NOT NULL,
+  `nama_bahan_baku` varchar(255) NOT NULL,
+  `stok` decimal(65,0) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bahan_baku`
+--
+
+INSERT INTO `bahan_baku` (`id`, `nama_bahan_baku`, `stok`) VALUES
+(1, 'Singkong', '1000'),
+(2, 'Ketan', '3000');
 
 -- --------------------------------------------------------
 
@@ -138,6 +158,31 @@ INSERT INTO `penjualan_detail` (`id`, `penjualan_id`, `produk_id`, `jumlah`, `ha
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `peramalan`
+--
+
+CREATE TABLE `peramalan` (
+  `id` int(11) NOT NULL,
+  `produk_id` int(11) DEFAULT NULL,
+  `periode` varchar(255) DEFAULT NULL,
+  `alpha` varchar(255) DEFAULT NULL,
+  `hasil` decimal(65,6) DEFAULT NULL,
+  `hasil_manual` decimal(65,6) DEFAULT NULL,
+  `mape` decimal(65,6) DEFAULT NULL,
+  `tanggal` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `peramalan`
+--
+
+INSERT INTO `peramalan` (`id`, `produk_id`, `periode`, `alpha`, `hasil`, `hasil_manual`, `mape`, `tanggal`) VALUES
+(3, 1, '2021-03', '0.4', '7941.524586', '7941.524586', '5.784728', '2021-05-09 12:32:52'),
+(5, 2, '2021-03', '0.5', '4765.800873', '4765.800873', '4.474960', '2021-05-10 02:25:13');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `produk`
 --
 
@@ -147,16 +192,18 @@ CREATE TABLE `produk` (
   `deskripsi` text NOT NULL,
   `foto` varchar(255) DEFAULT NULL,
   `harga` decimal(65,0) DEFAULT NULL,
-  `stok` int(11) NOT NULL
+  `stok` int(11) NOT NULL DEFAULT 0,
+  `bahan_baku_id` int(11) DEFAULT NULL,
+  `takaran_resep` decimal(65,0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `produk`
 --
 
-INSERT INTO `produk` (`id`, `nama_produk`, `deskripsi`, `foto`, `harga`, `stok`) VALUES
-(1, 'Tape Singkong', 'Ini tapi dari singkong', 'tape_singkong.jpg', '18000', 10),
-(2, 'Tape Ketan', 'ini tape ketan', 'tape-ketan-putih-2_43.jpeg', '17000', 10);
+INSERT INTO `produk` (`id`, `nama_produk`, `deskripsi`, `foto`, `harga`, `stok`, `bahan_baku_id`, `takaran_resep`) VALUES
+(1, 'Tape Singkong', 'Ini tapi dari singkong', 'tape_singkong.jpg', '18000', 11, 1, '1000'),
+(2, 'Tape Ketan', 'ini tape ketan', 'tape-ketan-putih-2_43.jpeg', '17000', 10, 2, '992');
 
 -- --------------------------------------------------------
 
@@ -188,6 +235,12 @@ INSERT INTO `user` (`id`, `username`, `password`, `nama`, `foto`, `role`) VALUES
 --
 
 --
+-- Indexes for table `bahan_baku`
+--
+ALTER TABLE `bahan_baku`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `penjualan`
 --
 ALTER TABLE `penjualan`
@@ -201,6 +254,12 @@ ALTER TABLE `penjualan_detail`
   ADD PRIMARY KEY (`id`),
   ADD KEY `produk_id` (`produk_id`),
   ADD KEY `penjualan_id` (`penjualan_id`);
+
+--
+-- Indexes for table `peramalan`
+--
+ALTER TABLE `peramalan`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `produk`
@@ -220,22 +279,34 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `bahan_baku`
+--
+ALTER TABLE `bahan_baku`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `penjualan_detail`
 --
 ALTER TABLE `penjualan_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+
+--
+-- AUTO_INCREMENT for table `peramalan`
+--
+ALTER TABLE `peramalan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
