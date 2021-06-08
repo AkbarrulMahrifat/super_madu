@@ -20,15 +20,40 @@ class Peramalan extends CI_Controller {
 		if ($produk_id == null) {
 			$produk_id = $this->ModelProduk->get_all()->first_row()->id;
 		}
-		$peramalan = $this->ModelPeramalan->get_peramalan_per_produk($produk_id)->result();
+		$last_data_peramalan = $this->db
+			->where("produk_id", $produk_id)
+			->order_by("periode", "DESC")
+			->get("peramalan")
+			->first_row();
+		if (!empty($last_data_peramalan)) {
+			$periode_peramalan = $last_data_peramalan->periode;
+		} else {
+			$periode_peramalan = date("Y-m");
+		}
+		$periode_awal = date("Y-m", strtotime($periode_peramalan . " -11 months"));
+		$data_periode = $this->get_periode($periode_awal, $periode_peramalan);
+
 		$data["produk_id"] = $produk_id;
 		$data["periode"] = array();
-		$data["hasil"] = array();
-		$data["hasil_manual"] = array();
-		foreach ($peramalan as $key => $p) {
-			$data["periode"][$key] = date("M Y", strtotime($p->periode));
-			$data["hasil"][$key] = $p->hasil;
-			$data["hasil_manual"][$key] = $p->hasil_manual;
+		$data["penjualan"] = array();
+		$data["peramalan"] = array();
+		foreach ($data_periode as $key => $periode) {
+			$penjualan = $this->ModelPeramalan->get_data_penjualan($periode, $produk_id)->first_row();
+			if (!empty($penjualan)){
+				$data_aktual[$key] = (int) $penjualan->jumlah;
+			}else{
+				$data_aktual[$key] = 0;
+			}
+			$peramalan = $this->ModelPeramalan->cek_peramalan($periode, $produk_id)->first_row();
+			if (!empty($peramalan)){
+				$data_peramalan[$key] = (int) round($peramalan->hasil);
+			}else{
+				$data_peramalan[$key] = 0;
+			}
+
+			$data["periode"][$key] = date("M Y", strtotime($periode));
+			$data["penjualan"][$key] = $data_aktual[$key];
+			$data["peramalan"][$key] = $data_peramalan[$key];
 		}
 		echo json_encode($data);
 	}

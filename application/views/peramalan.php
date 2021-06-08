@@ -127,26 +127,18 @@
 					labels  : data.periode,
 					datasets: [
 						{
-							label               : 'Perhitungan Sistem',
-							backgroundColor     : 'rgba(60,141,188,0.9)',
-							borderColor         : 'rgba(60,141,188,0.8)',
-							pointRadius          : false,
+							label               : 'Hasil Penjualan',
+							borderColor         : 'rgb(65, 105, 225)',
+							fill         		: false,
 							pointColor          : '#3b8bba',
-							pointStrokeColor    : 'rgba(60,141,188,1)',
-							pointHighlightFill  : '#fff',
-							pointHighlightStroke: 'rgba(60,141,188,1)',
-							data                : data.hasil
+							data                : data.penjualan
 						},
 						{
-							label               : 'Perhitungan Manual',
-							backgroundColor     : 'rgba(210, 214, 222, 1)',
-							borderColor         : 'rgba(210, 214, 222, 1)',
-							pointRadius         : false,
+							label               : 'Hasil Peramalan',
+							borderColor         : 'rgb(220, 20, 60)',
+							fill         		: false,
 							pointColor          : 'rgba(210, 214, 222, 1)',
-							pointStrokeColor    : '#c1c7d1',
-							pointHighlightFill  : '#fff',
-							pointHighlightStroke: 'rgba(220,220,220,1)',
-							data                : data.hasil_manual
+							data                : data.peramalan
 						},
 					]
 				}
@@ -174,9 +166,10 @@
 				}
 
 				var grafikPeramalan = new Chart(grafikPeramalanCanvas, {
-					type: 'bar',
+					type: 'line',
 					data: grafikPeramalanData,
-					options: grafikPeramalanOptions
+					options: grafikPeramalanOptions,
+					tension: 0.1
 				})
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
