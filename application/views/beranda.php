@@ -43,6 +43,51 @@
 		</div><!--/. container-fluid -->
 	</section>
 	<!-- /.content -->
+
+	<section class="content">
+		<div class="container-fluid">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Rekomendasi Stok</h3>
+
+					<div class="card-tools">
+						<button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+						</button>
+						<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+					</div>
+				</div>
+				<div class="card-body">
+					<table id="dataTable" class="table table-bordered table-hover">
+						<thead>
+						<tr>
+							<th>#</th>
+							<th>Periode</th>
+							<th>Nama Produk</th>
+							<th>Rekomendasi Stok Produk</th>
+							<th>Bahan Baku</th>
+							<th>Rekomendasi Stok Bahan Baku</th>
+						</tr>
+						</thead>
+						<tbody>
+						<?php $no = 1; foreach ($rekomendasi as $r) {?>
+							<tr>
+								<td><?=$no++?></td>
+								<td><?=date("M Y", strtotime($r["periode"]))?></td>
+								<td><?=$r["nama_produk"]?></td>
+								<td><?=$r["rekomendasi"]?></td>
+								<td><?=$r["nama_bahan_baku"]?></td>
+								<td><?=$r["rekomendasi_bb"]?> gr</td>
+							</tr>
+						<?php } ?>
+						</tbody>
+					</table>
+				</div>
+				<!-- /.card-body -->
+			</div>
+			<!-- /.card -->
+		</div><!--/. container-fluid -->
+	</section>
+	<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 <?php $this->load->view('footer'); ?>
