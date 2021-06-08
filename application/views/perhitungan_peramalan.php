@@ -80,20 +80,12 @@
 								</p>
 								<hr>
 								<form class="row" method="post" action="<?=site_url('peramalan/simpan')?>">
+									<input type="hidden" value="<?=$produk->id?>" name="produk_id" required/>
+									<input type="hidden" value="<?=$periode[count($periode)-1]?>" name="periode" required/>
+									<input type="hidden" value="<?=$index_mape_terkecil?>" name="alpha" required/>
+									<input type="hidden" value="<?=round($ftm[$index_mape_terkecil][count($periode)-1], 6)?>" name="hasil" required/>
+									<input type="hidden" value="<?=round($mape[$index_mape_terkecil], 6)?>" name="mape" required/>
 									<div class="form-group col-sm-4">
-										<label>Hasil Perhitungan Manual</label>
-										<div class="input-group">
-											<input type="text" class="form-control" name="hasil_manual" required/>
-											<input type="hidden" value="<?=$produk->id?>" name="produk_id" required/>
-											<input type="hidden" value="<?=$periode[count($periode)-1]?>" name="periode" required/>
-											<input type="hidden" value="<?=$index_mape_terkecil?>" name="alpha" required/>
-											<input type="hidden" value="<?=round($ftm[$index_mape_terkecil][count($periode)-1], 6)?>" name="hasil" required/>
-											<input type="hidden" value="<?=round($mape[$index_mape_terkecil], 6)?>" name="mape" required/>
-										</div>
-									</div>
-
-									<div class="form-group col-sm-4">
-										<label class="text-light">--------</label>
 										<div class="input-group">
 										<button class="btn btn-primary" type="submit">Simpan</button>
 										<a class="btn btn-danger ml-2" href="<?=site_url('peramalan')?>">Kembali</a>

@@ -139,16 +139,11 @@ class Peramalan extends CI_Controller {
 	{
 		$this->db->trans_begin();
 		try {
-			$hasil_manual = $this->input->post("hasil_manual");
-			if ($hasil_manual == null or $hasil_manual == "null") {
-				$hasil_manual = $this->input->post("hasil");
-			}
 			$data = array(
 				"produk_id" => $this->input->post("produk_id"),
 				"periode" => $this->input->post("periode"),
 				"alpha" => $this->input->post("alpha"),
 				"hasil" => $this->input->post("hasil"),
-				"hasil_manual" => $hasil_manual,
 				"mape" => $this->input->post("mape"),
 				"tanggal" => date("Y-m-d H:i:s")
 			);
