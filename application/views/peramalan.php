@@ -102,6 +102,60 @@
 		</div>
 	</section>
 	<!-- /.content -->
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">History Peralaman</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="dataTable" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Periode</th>
+                            <th>Nama Produk</th>
+                            <th>Alpha</th>
+                            <th>Hasil Peramalan</th>
+                            <th>MAPE</th>
+                            <th>Tanggal Peramalan</th>
+                            <th>Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $no = 1; foreach ($peramalan as $p) {?>
+                            <tr>
+                                <td><?=$no++?></td>
+                                <td><?=date("M Y", strtotime($p->periode))?></td>
+                                <td><?=$p->nama_produk?></td>
+                                <td><?=$p->alpha?></td>
+                                <td><?=$p->hasil?></td>
+                                <td><?=$p->mape?></td>
+                                <td><?=$p->tanggal?></td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')"
+                                       href="<?=site_url('peramalan/delete/'.$p->id)?>">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div><!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 <?php $this->load->view('footer'); ?>

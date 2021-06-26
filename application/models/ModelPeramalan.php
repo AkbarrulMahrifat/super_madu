@@ -23,6 +23,15 @@ class ModelPeramalan extends CI_Model
 		return $this->db->get();
 	}
 
+	public function get_all() {
+		$this->db->select("peramalan.*, nama_produk");
+		$this->db->from('peramalan');
+        $this->db->join('produk', 'peramalan.produk_id=produk.id', 'left');
+		$this->db->order_by('produk_id');
+		$this->db->order_by('periode');
+		return $this->db->get();
+	}
+
 	public function get_peramalan_per_produk($produk_id) {
 		$this->db->select("*");
 		$this->db->from('peramalan');
@@ -41,4 +50,10 @@ class ModelPeramalan extends CI_Model
 		$this->db->where("id", $id);
 		return $this->db->update('peramalan', $data);
 	}
+
+    public function delete($id)
+    {
+        $this->db->where("id", $id);
+        return $this->db->delete('peramalan');
+    }
 }

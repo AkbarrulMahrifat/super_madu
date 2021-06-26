@@ -12,6 +12,7 @@ class Peramalan extends CI_Controller {
 	public function index()
 	{
 		$data["produk"] = $this->ModelProduk->get_all()->result();
+		$data["peramalan"] = $this->ModelPeramalan->get_all()->result();
 		$this->load->view('peramalan', $data);
 	}
 
@@ -189,4 +190,20 @@ class Peramalan extends CI_Controller {
 			redirect("peramalan");
 		}
 	}
+
+    public function delete($id)
+    {
+        $this->db->trans_begin();
+        try {
+            $this->ModelPeramalan->delete($id);
+            $this->db->trans_commit();
+            $this->notification->success("Data berhasil dihapus");
+            redirect("peramalan");
+        }
+        catch (\Exception $e) {
+            $this->db->trans_rollback();
+            $this->notification->error($e->getMessage());
+            redirect("peramalan");
+        }
+    }
 }
